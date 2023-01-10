@@ -1,6 +1,7 @@
 create database mvs_hostel;
 use mvs_hostel;
  
+ drop database mvs_hostel;
 -- 2
 create table student(
 sid int primary key,
@@ -22,11 +23,15 @@ desc student;
 
 -- 1
 create table office(
-office_id int,
-oname varchar(20) not null,
-placeno varchar(10) primary key
+-- office_id int,
+-- oname varchar(20) not null,
+placeno varchar(10) primary key,
+fno int,
+hno int
+-- foreign key(fno) references apartment(fno) on delete cascade on update cascade,
+-- foreign key(hno) references apartment(hno) on delete cascade on update cascade
 );
-
+drop table office;
 -- 3
 create table hall(
 hno int primary key,
@@ -35,6 +40,7 @@ m_id int ,
 mname varchar(20) ,
 address varchar(20) not null,
 tno int,
+
 office_id int);
 -- foreign key(office_id) references office(office_id) on delete cascade on update cascade);
 
@@ -75,17 +81,19 @@ foreign key(dplaceno)references office(placeno) on delete cascade on update casc
 drop table dormitory;
 -- 7
 create table invoice
-(
+( 
 iid int primary key,
 term varchar(10), -- t1,t2,t3
 sid int,
 sname varchar(20),-- full
 due_amt int,
 pdate date,
-placeno int, -- p
+placeno varchar(10), -- p
 -- roomno int 
 address varchar(20),
-foreign key (sid) references student(sid) on delete cascade on update cascade
+foreign key (sid) references student(sid) on delete cascade on update cascade,
+-- changed
+foreign key (placeno) references office(placeno) on delete cascade on update cascade
 );
 
 -- 8
@@ -114,13 +122,12 @@ insert into student values(3,'2003-08-17','Ramesh','kumar','jpn','blr',068,'Indi
 insert into student values(4,'2003-08-18','Raveesh','kumar','jyn','blr',072,'India',18,'UG','Ad10b2','p');
 insert into student values(5,'2003-08-19','Rashid','kumar','bsg','blr',019,'India',18,'UG','Bd10b1','np');
 
--- ofice id - 234
-
-insert into office values(1,'expert','Vr1');
-insert into office values(1,'expert','Mr1');
-insert into office values(1,'expert','Ad10b1');
-insert into office values(1,'expert','Ad10b2');
-insert into office values(1,'expert','Bd10b1');
+-- pno fno hno
+insert into office values('Vr1',null,1);
+insert into office values('Mr1',null,2);
+insert into office values('Ad10b1',201,null);
+insert into office values('Ad10b2',201,null);
+insert into office values('Bd10b1',202,null);
 
 insert into hall values (1,'V',60,'Vict','nrcolony',989,1);
 insert into hall values (2,'M',61,'amster','jaynagar',986,1);
@@ -157,12 +164,13 @@ insert into inspect values(303,11,203);
 insert into inspect values(304,10,204);
 insert into inspect values(305,null,201);
 
-insert into invoice values(1234,1,1234,'2023-04-09');
-insert into invoice values(1235,2,1234,'2023-04-09');
-insert into invoice values(1236,3,1234,'2023-04-09');
-insert into invoice values(1237,4,1234,'2023-04-09');
-insert into invoice values(1238,5,1234,'2023-04-09');
-insert into invoice values(1239,6,1234,'2023-04-09');
+-- iid term sid sname due_amt pdate placeno address 
+insert into invoice values(1234,1,1,'Rajesh',30000,'2023-04-09','Vr1',);
+insert into invoice values(1235,2,1,'Rajesh',25000,'2023-06-09','Vr1',);
+insert into invoice values(1236,1,2,'Rakesh',20000,'2023-04-09','Mr1',);
+insert into invoice values(1237,1,3,'Ramesh',15000,'2023-04-09','Ad10b1',);
+insert into invoice values(1238,2,3,'Ramesh',10000,'2023-04-09','Ad10b1',);
+insert into invoice values(1239,1,4,'Raveesh',12000,'2023-04-09','Ad10b2',);
 
 select * from student;
 select * from office;
@@ -181,8 +189,17 @@ where s.placeno=o.placeno and o.placeno like "Ad10%";
 
 select s.fname,s.sid
 from student s, office o ,apartment a,dormitory d
-where s.placeno=o.placeno and o.office_id=a.office_id and a.address="jaynagar" and a.fno=d.fno;
+where s.placeno=o.placeno and o.fno=a.fno and d.fno=a.fno and a.address="jaynagar";
 
--- If i give office id unique values then join is possible
+-- Giving fno and hno in office makes join possible.
+select o.placeno
+from office o, hall h
+where o.hno=h.hno and h.hno=1;
+
+select mname,m_id 
+from hall 
+where hname="V";
+
+
 
 
