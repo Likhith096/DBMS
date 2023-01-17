@@ -1,0 +1,6 @@
+{"_id":{"$oid":"63c6447bb17ad46ac359ed3f"},"RollNo":1,"Age":21,"Cont":9876,"email":"likhi.db@gmail.com"}
+{"_id":{"$oid":"63c644d0b17ad46ac359ed40"},"RollNo":2,"Age":21,"Cont":5676,"email":"ram.db@gmail.com"}
+{"_id":{"$oid":"63c64510b17ad46ac359ed41"},"RollNo":3,"Age":22,"Cont":7986,"email":"shyam.db@gmail.com"}
+{"_id":{"$oid":"63c6452db17ad46ac359ed42"},"RollNo":4,"Age":19,"Cont":9865,"email":"mohan.db@gmail.com"}
+{"_id":{"$oid":"63c64565b17ad46ac359ed43"},"RollNo":5,"Age":32,"Cont":8865,"email":"jakb.db@gmail.com"}
+{"_id":{"$oid":"63c64752b17ad46ac359ed44"},"RollNo":7,"Age":33,"Name":"Curran","Cont":8865,"email":"curran,db@gmail.com"}
